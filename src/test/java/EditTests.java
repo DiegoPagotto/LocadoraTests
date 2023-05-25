@@ -6,7 +6,11 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
+
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 public class EditTests {
@@ -31,6 +35,16 @@ public class EditTests {
         WebElement buttonEdit= driver.findElement(By.cssSelector("table#carrosTable .edit-button"));
         buttonEdit.click();
         assertTrue(driver.findElement(By.id("editModal")).isEnabled());
+    }
+    @Test
+    @DisplayName("Should open edit modal for car selected")
+    void shouldOpenEditModalForCarSelected(){
+        WebElement column = driver.findElement(By.xpath("//*[@id=\"carrosTable\"]/tbody/tr[2]/td[6]"));
+        String plate = column.getText();
+        WebElement buttonEdit= driver.findElement(By.cssSelector("table#carrosTable .edit-button"));
+        buttonEdit.click();
+        WebElement inputPlate = driver.findElement(By.id("placa"));
+        assertThat(inputPlate.getAttribute("value")).isEqualTo(plate);
     }
 
 }
