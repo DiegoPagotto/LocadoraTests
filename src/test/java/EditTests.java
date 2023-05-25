@@ -46,5 +46,17 @@ public class EditTests {
         WebElement inputPlate = driver.findElement(By.id("placa"));
         assertThat(inputPlate.getAttribute("value")).isEqualTo(plate);
     }
+    @Test
+    @DisplayName("Should display error message and keep edit modal open when saving car without year")
+    void shouldDisplayErrorMessageAndKeepEditModalOpenWhenSavingCarWithoutYear() {
+        WebElement buttonEdit= driver.findElement(By.cssSelector("table#carrosTable .edit-button"));
+        buttonEdit.click();
+        WebElement inputYear = driver.findElement(By.id("ano"));
+        inputYear.sendKeys("");
+        WebElement buttonSave = driver.findElement(By.cssSelector("#editForm input[type='submit']"));
+        buttonSave.click();
+        assertTrue(driver.findElement(By.id("editModal")).isEnabled());
+    }
+
 
 }
