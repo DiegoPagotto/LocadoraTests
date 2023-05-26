@@ -7,12 +7,10 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 
 import java.time.Duration;
-import java.util.List;
 import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -83,7 +81,23 @@ public class EditTests {
                 .click();
         assertThat(driver.findElement(By.id("editModal")).isDisplayed()).isFalse();
     }
+    @Test
+    @DisplayName("Should closed edit modal and not edit car after filling the form")
+    void shouldClosedEditModalAndNotEditCarAfterFillingTheForm(){
+        WebElement inputColor = driver.findElement(By.id("cor"));
+        inputColor.clear();
+        inputColor.sendKeys("Azul del rey");
+        WebElement inputYear = driver.findElement(By.id("ano"));
+        inputYear.clear();
+        inputYear.sendKeys("2002");
 
+        WebElement buttonClose = driver.findElement(By.className("close"));
+        buttonClose.click();
+        WebElement columnColor = driver.findElement(By.xpath("//*[@id=\"carrosTable\"]/tbody/tr[2]/td[5]"));
+        WebElement columnYear = driver.findElement(By.xpath("//*[@id=\"carrosTable\"]/tbody/tr[2]/td[4]"));
 
+        assertThat(columnColor.getText()).isNotEqualTo("Azul del rey");
+        assertThat(columnYear.getText()).isNotEqualTo("2002");
+    }
 
 }
