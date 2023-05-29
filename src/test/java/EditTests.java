@@ -1,6 +1,7 @@
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -102,6 +103,14 @@ public class EditTests {
 
         assertThat(columnColor.getText()).isNotEqualTo("Azul del rey");
         assertThat(columnYear.getText()).isNotEqualTo("2002");
+    }
+    @Test
+    @DisplayName("Should open edit modal when click on edit button and screen is small")
+    void shouldOpenEditModalWhenClickOnEditButtonAndScreenIsSmall(){
+        Dimension smallWindowSize = new Dimension(800, 600);
+        driver.manage().window().setSize(smallWindowSize);
+        clickOnButton();
+        assertTrue(driver.findElement(By.id("editModal")).isDisplayed());
     }
     private void clickOnButton(){
         WebElement buttonEdit= driver.findElement(By.cssSelector("table#carrosTable .edit-button"));
