@@ -28,8 +28,6 @@ public class EditTests {
         options.addArguments("--remote-allow-origins=*");
         driver = new ChromeDriver(options);
         driver.get("C:\\SeleniumTestNew\\frontend\\home\\index.html\n");
-        WebElement buttonEdit= driver.findElement(By.cssSelector("table#carrosTable .edit-button"));
-        buttonEdit.click();
     }
     @AfterEach
     public void tearDown() {
@@ -38,11 +36,13 @@ public class EditTests {
     @Test
     @DisplayName("Should open edit modal")
     void shouldOpenEditModal(){
+        clickOnButton();
         assertTrue(driver.findElement(By.id("editModal")).isEnabled());
     }
     @Test
     @DisplayName("Should open edit modal for car selected")
     void shouldOpenEditModalForCarSelected(){
+        clickOnButton();
         WebElement column = driver.findElement(By.xpath("//*[@id=\"carrosTable\"]/tbody/tr[2]/td[6]"));
         String plate = column.getText();
         WebElement inputPlate = driver.findElement(By.id("placa"));
@@ -51,6 +51,7 @@ public class EditTests {
     @Test
     @DisplayName("Should display error message and keep edit modal open when saving car without year")
     void shouldDisplayErrorMessageAndKeepEditModalOpenWhenSavingCarWithoutYear() {
+        clickOnButton();
         WebElement inputYear = driver.findElement(By.id("ano"));
         inputYear.sendKeys("");
         WebElement buttonSave = driver.findElement(By.cssSelector("#editForm input[type='submit']"));
@@ -60,6 +61,7 @@ public class EditTests {
     @Test
     @DisplayName("Should edit car and update table")
     void shouldEditCarAndUpdateTable(){
+        clickOnButton();
         WebElement inputColor = driver.findElement(By.id("cor"));
         inputColor.clear();
         inputColor.sendKeys("Amarelo");
@@ -73,6 +75,7 @@ public class EditTests {
     @Test
     @DisplayName("Should closed edit modal when click on close button")
     void shouldClosedEditModalWhenClickOnCloseButton(){
+        clickOnButton();
         new FluentWait<>(driver)
                 .withTimeout(Duration.ofSeconds(10))
                 .pollingEvery(Duration.ofMillis(700))
@@ -84,6 +87,7 @@ public class EditTests {
     @Test
     @DisplayName("Should closed edit modal and not edit car after filling the form")
     void shouldClosedEditModalAndNotEditCarAfterFillingTheForm(){
+        clickOnButton();
         WebElement inputColor = driver.findElement(By.id("cor"));
         inputColor.clear();
         inputColor.sendKeys("Azul del rey");
@@ -98,6 +102,10 @@ public class EditTests {
 
         assertThat(columnColor.getText()).isNotEqualTo("Azul del rey");
         assertThat(columnYear.getText()).isNotEqualTo("2002");
+    }
+    private void clickOnButton(){
+        WebElement buttonEdit= driver.findElement(By.cssSelector("table#carrosTable .edit-button"));
+        buttonEdit.click();
     }
 
 }
