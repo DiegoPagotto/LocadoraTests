@@ -12,6 +12,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 
 import java.time.Duration;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -27,10 +28,24 @@ public class DeleteTests {
         options.addArguments("--remote-allow-origins=*");
         driver = new ChromeDriver(options);
         driver.get("C:\\SeleniumTestNew\\frontend\\home\\index.html\n");
+        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(10000));
     }
     @AfterEach
     public void tearDown() {
         driver.quit();
+    }
+
+    @Test
+    @DisplayName("Should delete the first entry")
+    void souldDeleteFirstEntry() {
+        final List<WebElement> delBtns = driver.findElements(By.className("delete-button"));
+        if(delBtns.size() == 0){
+            assertThat("Empty table").isEqualTo("Table with content");
+        }
+        final String carPlate = driver.findElement(By.xpath("//*[@id=\"carrosTable\"]/tbody/tr[2]/td[6]")).getText();
+        driver.findElement(By.className("delete-button")).click();
+        driver.navigate().refresh();
+        assertThat(driver.findElement(By.xpath("//*[@id=\"carrosTable\"]/tbody/tr[2]/td[6]")).getText()).isNotEqualTo(carPlate);
     }
 
     @Test
