@@ -49,6 +49,21 @@ public class DeleteTests {
     }
 
     @Test
+    @DisplayName("Should delete the last entry")
+    void shouldDeleteLastEntry(){
+        final List<WebElement> delBtns = driver.findElements(By.className("delete-button"));
+        if(delBtns.size() == 0){
+            assertThat("Empty table").isEqualTo("Table with content");
+        }
+        int tableLen = delBtns.size() + 1;
+        final String carPlate = driver.findElement(By.xpath("//*[@id=\"carrosTable\"]/tbody/tr["+ tableLen +"]/td[6]")).getText();
+        driver.findElement(By.xpath("//*[@id=\"carrosTable\"]/tbody/tr["+ tableLen +"]/td[6]")).click();
+        driver.navigate().refresh();
+        tableLen--;
+        assertThat(driver.findElement(By.xpath("//*[@id=\"carrosTable\"]/tbody/tr["+ tableLen +"]/td[6]")).getText()).isNotEqualTo(carPlate);
+    }
+
+    @Test
     @DisplayName("Should open and close chrome browser using Manager")
     //Esse caso de teste é só um exemplo
     void shouldOpenAndCloseChromeBrowserUsingManager() throws InterruptedException {
