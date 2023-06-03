@@ -14,6 +14,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -61,6 +62,22 @@ public class DeleteTests {
         driver.navigate().refresh();
         tableLen--;
         assertThat(driver.findElement(By.xpath("//*[@id=\"carrosTable\"]/tbody/tr["+ tableLen +"]/td[6]")).getText()).isNotEqualTo(carPlate);
+    }
+
+    @Test
+    @DisplayName("Should delete random entry from middle")
+    void shouldDeleteRandomMiddle(){
+        final List<WebElement> delBtns = driver.findElements(By.className("delete-button"));
+        if(delBtns.size() == 0){
+            assertThat("Empty table").isEqualTo("Table with content");
+        }
+        int tableLen = delBtns.size() + 1;
+        Random random = new Random();
+        int posRemove = random.nextInt(tableLen) + 3;
+        driver.findElement(By.xpath("//*[@id=\"carrosTable\"]/tbody/tr["+ posRemove +"]/td[7]/button[2]")).click();
+        driver.navigate().refresh();
+        final List<WebElement> tableLenNew = driver.findElements(By.className("delete-button"));
+        assertThat(tableLenNew.size()).isLessThan(delBtns.size());
     }
 
     @Test
