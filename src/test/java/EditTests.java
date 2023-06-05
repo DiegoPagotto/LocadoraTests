@@ -112,6 +112,15 @@ public class EditTests {
         clickOnButton();
         assertTrue(driver.findElement(By.id("editModal")).isDisplayed());
     }
+    @Test
+    @DisplayName("Should open edit modal when click on edit button and screen is medium")
+    void shouldOpenEditModalWhenClickOnEditButtonAndScreenIsMedium(){
+        Dimension mediumWindowSize = new Dimension(1024, 768);
+        driver.manage().window().setSize(mediumWindowSize);
+        clickOnButton();
+        assertTrue(driver.findElement(By.id("editModal")).isDisplayed());
+    }
+
     private void clickOnButton(){
         WebElement buttonEdit= driver.findElement(By.cssSelector("table#carrosTable .edit-button"));
         buttonEdit.click();
