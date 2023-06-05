@@ -68,12 +68,12 @@ public class DeleteTests {
     @DisplayName("Should delete random entry from middle")
     void shouldDeleteRandomMiddle(){
         final List<WebElement> delBtns = driver.findElements(By.className("delete-button"));
-        if(delBtns.size() == 0){
-            assertThat("Empty table").isEqualTo("Table with content");
+        if(delBtns.size() < 3){
+            assertThat("Table has less than 3 entries").isEqualTo("This test needs 3 or more entries in the table");
         }
         int tableLen = delBtns.size() + 1;
         Random random = new Random();
-        int posRemove = random.nextInt(tableLen) + 3;
+        int posRemove = random.nextInt(tableLen - 3) + 3;
         driver.findElement(By.xpath("//*[@id=\"carrosTable\"]/tbody/tr["+ posRemove +"]/td[7]/button[2]")).click();
         driver.navigate().refresh();
         final List<WebElement> tableLenNew = driver.findElements(By.className("delete-button"));
