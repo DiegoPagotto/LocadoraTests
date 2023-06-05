@@ -60,8 +60,8 @@ public class DeleteTests {
         final String carPlate = driver.findElement(By.xpath("//*[@id=\"carrosTable\"]/tbody/tr["+ tableLen +"]/td[6]")).getText();
         driver.findElement(By.xpath("//*[@id=\"carrosTable\"]/tbody/tr["+ tableLen +"]/td[6]")).click();
         driver.navigate().refresh();
-        tableLen--;
-        assertThat(driver.findElement(By.xpath("//*[@id=\"carrosTable\"]/tbody/tr["+ tableLen +"]/td[6]")).getText()).isNotEqualTo(carPlate);
+        final List<WebElement> tableLenNew = driver.findElements(By.className("delete-button"));
+        assertThat(tableLenNew.size()).isLessThan(delBtns.size());
     }
 
     @Test
