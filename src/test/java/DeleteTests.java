@@ -52,13 +52,13 @@ public class DeleteTests {
     @Test
     @DisplayName("Should delete the last entry")
     void shouldDeleteLastEntry(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofMillis(10000));
         final List<WebElement> delBtns = driver.findElements(By.className("delete-button"));
-        if(delBtns.size() == 0){
+        if(delBtns.isEmpty()){
             assertThat("Empty table").isEqualTo("Table with content");
         }
-        int tableLen = delBtns.size() + 1;
-        final String carPlate = driver.findElement(By.xpath("//*[@id=\"carrosTable\"]/tbody/tr["+ tableLen +"]/td[6]")).getText();
-        driver.findElement(By.xpath("//*[@id=\"carrosTable\"]/tbody/tr["+ tableLen +"]/td[6]")).click();
+        WebElement button = wait.until(ExpectedConditions.elementToBeClickable(delBtns.get(delBtns.size() - 1)));
+        button.click();
         driver.navigate().refresh();
         final List<WebElement> tableLenNew = driver.findElements(By.className("delete-button"));
         assertThat(tableLenNew.size()).isLessThan(delBtns.size());
