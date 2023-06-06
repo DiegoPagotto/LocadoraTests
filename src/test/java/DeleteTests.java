@@ -82,13 +82,16 @@ public class DeleteTests {
 
     @Test
     @DisplayName("Should delete all entries in the table")
-    void shouldDeleteAll() throws InterruptedException {
+    void shouldDeleteAll(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofMillis(10000));
         final List<WebElement> delBtns = driver.findElements(By.className("delete-button"));
         if(delBtns.isEmpty()){
             assertThat("Empty table").isEqualTo("Table with content");
         }
+        WebElement button;
         for(int i = delBtns.size(); i > 0; i--){
-            driver.findElement(By.className("delete-button")).click();
+            button = wait.until(ExpectedConditions.elementToBeClickable(By.className("delete-button")));
+            button.click();
             driver.navigate().refresh();
         }
         final List<WebElement> tableLenNew = driver.findElements(By.className("delete-button"));
