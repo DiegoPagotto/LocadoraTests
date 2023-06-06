@@ -140,6 +140,17 @@ public class EditTests {
         inputYear.sendKeys("a");
         assertThat(inputYear.getAttribute("value")).isEqualTo("");
     }
+    @Test
+    @DisplayName("Should display error message and keep edit modal open when saving car with an invalid year ")
+    void shouldDisplayErrorMessageAndKeepEditModalOpenWhenSavingCarWithAnInvalidYear(){
+        clickOnButton();
+        WebElement inputYear = driver.findElement(By.id("ano"));
+        inputYear.clear();
+        inputYear.sendKeys("0");
+        WebElement buttonSave = driver.findElement(By.cssSelector("#editForm input[type='submit']"));
+        buttonSave.click();
+        assertThat(driver.findElement(By.id("editModal")).isDisplayed()).isTrue();
+    }
 
 
     private void clickOnButton(){
