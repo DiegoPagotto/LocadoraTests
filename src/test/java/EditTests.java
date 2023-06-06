@@ -120,6 +120,18 @@ public class EditTests {
         clickOnButton();
         assertTrue(driver.findElement(By.id("editModal")).isDisplayed());
     }
+    @Test
+    @DisplayName("Should display error message and keep edit modal open when saving car with an invalid plate")
+    void shouldDisplayErrorMessageAndKeepEditModalOpenWhenSavingCarWithAnInvalidPlate(){
+        clickOnButton();
+        WebElement inputPlate = driver.findElement(By.id("placa"));
+        inputPlate.clear();
+        inputPlate.sendKeys("A");
+        WebElement buttonSave = driver.findElement(By.cssSelector("#editForm input[type='submit']"));
+        buttonSave.click();
+        assertThat(driver.findElement(By.id("editModal")).isDisplayed()).isTrue();
+    }
+
 
     private void clickOnButton(){
         WebElement buttonEdit= driver.findElement(By.cssSelector("table#carrosTable .edit-button"));
