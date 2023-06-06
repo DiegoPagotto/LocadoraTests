@@ -131,6 +131,15 @@ public class EditTests {
         buttonSave.click();
         assertThat(driver.findElement(By.id("editModal")).isDisplayed()).isTrue();
     }
+    @Test
+    @DisplayName("Should keep year field empty when typing letters")
+    void shouldKeepYearFieldEmptyWhenTypingLetters(){
+        clickOnButton();
+        WebElement inputYear = driver.findElement(By.id("ano"));
+        inputYear.clear();
+        inputYear.sendKeys("a");
+        assertThat(inputYear.getAttribute("value")).isEqualTo("");
+    }
 
 
     private void clickOnButton(){
