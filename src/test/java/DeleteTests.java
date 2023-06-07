@@ -37,6 +37,14 @@ public class DeleteTests {
     }
 
     @Test
+    @DisplayName("Should have the same amount of delete buttons and table rows")
+    void shouldHaveSameButtonsAndRows(){
+        int delBtnsAmount = driver.findElements(By.className("delete-button")).size();
+        int tableRowsAmount = driver.findElements(By.tagName("tr")).size();
+        assertThat(delBtnsAmount).isEqualTo(tableRowsAmount - 1);
+    }
+    
+    @Test
     @DisplayName("Should delete the first entry")
     void souldDeleteFirstEntry() {
         final List<WebElement> delBtns = driver.findElements(By.className("delete-button"));
