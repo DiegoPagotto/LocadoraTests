@@ -119,7 +119,20 @@ public class CreateTests {
         java.util.List<WebElement> cells = lastRow.findElements(By.tagName("td"));
 
         assertThat(cells.get(1).getText()).isNotEqualTo("Ford"); // o último carro adicionado não deve ser o Ford Mustang
-            }
+    }
+
+    @Test
+    @DisplayName("Should not be able to register a car with invalid plate format")
+    void shouldNotBeAbleToRegisterACarWithInvalidPlateFormat(){
+        int numberOfCars = getNumbersOfCars();
+        goToRegisterPage();
+        fillRegisterForm("Nissan", "Kicks", 2020, "Vermelho", "batatinha");
+        submitFormAndWait();
+
+        // nenhum carro novo pode ter sido adicionado
+        assertThat(getNumbersOfCars()).isEqualTo(numberOfCars);
+    }
+
 
     private void goToHomePage() {
         WebElement buttonHome = driver.findElement(By.xpath("/html/body/div/nav/ul/li[1]"));
