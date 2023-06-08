@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -131,6 +132,15 @@ public class CreateTests {
 
         // nenhum carro novo pode ter sido adicionado
         assertThat(getNumbersOfCars()).isEqualTo(numberOfCars);
+    }
+
+    @Test
+    @DisplayName("Should be able to go to the register page on mobile")
+    void shouldBeAbleToGoToTheRegisterPageOnMobile(){
+        Dimension mobileViewport = new Dimension(375, 812);
+        driver.manage().window().setSize(mobileViewport);
+        WebElement buttonHome = driver.findElement(By.xpath("/html/body/div/nav/ul/li[1]"));
+        assertThat(buttonHome.isDisplayed()).isTrue();
     }
 
     @Test
