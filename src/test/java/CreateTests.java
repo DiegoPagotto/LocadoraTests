@@ -104,6 +104,22 @@ public class CreateTests {
         assertThat(createdColor).isEqualTo(cor);
         assertThat(createdPlate).isEqualTo(placa);
     }
+    
+    @Test
+    @DisplayName("Should not be able to register a car with a plate that already exists")
+    void shouldNotBeAbleToRegisterACarWithAPlateThatAlreadyExists(){
+        String plate = "DUD2B19";
+        goToRegisterPage();
+        fillRegisterForm("Nissan", "Kicks", 2020, "Vermelho", plate);
+        submitFormAndWait();
+        fillRegisterForm("Ford", "Mustang", 2022, "Branco", plate);
+        submitFormAndWait();
+
+        WebElement lastRow = driver.findElement(By.cssSelector("#carrosTable tbody tr:last-child"));
+        java.util.List<WebElement> cells = lastRow.findElements(By.tagName("td"));
+
+        assertThat(cells.get(1).getText()).isNotEqualTo("Ford"); // o último carro adicionado não deve ser o Ford Mustang
+            }
 
     private void goToHomePage() {
         WebElement buttonHome = driver.findElement(By.xpath("/html/body/div/nav/ul/li[1]"));
