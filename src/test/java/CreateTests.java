@@ -91,7 +91,55 @@ public class CreateTests {
 
         // nenhum carro novo pode ter sido adicionado
         assertThat(getNumbersOfCars()).isEqualTo(numberOfCars);
+    }
 
+    @Test
+    @DisplayName("Created car should have the same attributes as the ones entered")
+    void createdCarShouldHaveTheSameAttributesAsTheOnesEntered(){
+        String marca = "Toyota";
+        String modelo = "Corolla";
+        int ano = 2022;
+        String cor = "Prata";
+        String placa = "ABC1234";
+
+        goToRegisterPage();
+
+        WebElement brandInput = driver.findElement(By.id("marca"));
+        brandInput.sendKeys(marca);
+
+        WebElement modelInput = driver.findElement(By.id("modelo"));
+        modelInput.sendKeys(modelo);
+
+        WebElement yearInput = driver.findElement(By.id("ano"));
+        yearInput.sendKeys(String.valueOf(ano));
+
+        WebElement colorInput = driver.findElement(By.id("cor"));
+        colorInput.sendKeys(cor);
+
+        WebElement plateInput = driver.findElement(By.id("placa"));
+        plateInput.sendKeys(placa);
+
+        WebElement submitButton = driver.findElement(By.xpath("//button[@type='submit']"));
+        submitButton.click();
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.id("carrosTable")));
+
+        WebElement lastRow = driver.findElement(By.cssSelector("#carrosTable tbody tr:last-child"));
+
+        java.util.List<WebElement> cells = lastRow.findElements(By.tagName("td"));
+
+        String createdBrand = cells.get(1).getText();
+        String createdModel = cells.get(2).getText();
+        int createYear = Integer.parseInt(cells.get(3).getText());
+        String createdColor = cells.get(4).getText();
+        String createdPlate = cells.get(5).getText();
+
+        assertThat(createdBrand).isEqualTo(marca);
+        assertThat(createdModel).isEqualTo(modelo);
+        assertThat(createYear).isEqualTo(ano);
+        assertThat(createdColor).isEqualTo(cor);
+        assertThat(createdPlate).isEqualTo(placa);
     }
 
     private void goToHomePage() {
