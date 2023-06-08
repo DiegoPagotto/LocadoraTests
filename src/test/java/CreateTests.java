@@ -62,6 +62,17 @@ public class CreateTests {
         }
 
     }
+
+    @Test
+    @DisplayName("Should be able to register a car")
+    void shouldBeAbleToRegisterACar(){
+        int numberOfCars = getNumbersOfCars();
+        goToRegisterPage();
+        fillRegisterForm("BMW", "M3 E46", 2005, "Prata/Azul", "NFS2005");
+        submitFormAndWait();
+        assertThat(getNumbersOfCars()).isEqualTo(numberOfCars + 1);
+
+    }
     
     @Test
     @DisplayName("Should not be able to register a car with space as attribute")
