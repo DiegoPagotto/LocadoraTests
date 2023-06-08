@@ -133,7 +133,14 @@ public class CreateTests {
         assertThat(getNumbersOfCars()).isEqualTo(numberOfCars);
     }
 
-
+    @Test
+    @DisplayName("Should not be able to submit form with empty fields")
+    void shouldNotBeAbleToSubmitFormWithEmptyFields(){
+        goToRegisterPage();
+        WebElement submitButton = driver.findElement(By.xpath("//button[@type='submit']"));
+        submitButton.click();
+        assertThat(driver.getCurrentUrl()).endsWith("/register/index.html");
+    }
     private void goToHomePage() {
         WebElement buttonHome = driver.findElement(By.xpath("/html/body/div/nav/ul/li[1]"));
         buttonHome.click();
