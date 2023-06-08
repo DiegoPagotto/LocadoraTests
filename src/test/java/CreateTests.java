@@ -35,7 +35,19 @@ public class CreateTests {
         goToRegisterPage();
         assertTrue(driver.getCurrentUrl().endsWith("register/index.html"));
     }
-    
+
+    @Test
+    @DisplayName("Should navigate to home page when home button is clicked")
+    void shouldNavigateToHomePageWhenHomeButtonIsClicked(){
+        goToRegisterPage();
+        goToHomePage();
+        assertTrue(driver.getCurrentUrl().endsWith("home/index.html"));
+    }
+
+    private void goToHomePage() {
+        WebElement buttonHome = driver.findElement(By.xpath("/html/body/div/nav/ul/li[1]"));
+        buttonHome.click();
+    }
 
     private void goToRegisterPage() {
         WebElement buttonCreate = driver.findElement(By.xpath("/html/body/div/nav/ul/li[2]"));
