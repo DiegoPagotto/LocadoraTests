@@ -67,27 +67,8 @@ public class CreateTests {
     void shouldNotBeAbleToRegisterACarWithSpaceAsAttribute(){
         int numberOfCars = getNumbersOfCars();
         goToRegisterPage();
-        WebElement brandInput = driver.findElement(By.id("marca"));
-        brandInput.sendKeys(" ");
-
-        WebElement modelInput = driver.findElement(By.id("modelo"));
-        modelInput.sendKeys(" ");
-
-        WebElement yearInput = driver.findElement(By.id("ano"));
-        yearInput.sendKeys("0");
-
-        WebElement colorInput = driver.findElement(By.id("cor"));
-        colorInput.sendKeys(" ");
-
-        WebElement plateInput = driver.findElement(By.id("placa"));
-        plateInput.sendKeys(" ");
-
-        WebElement submitButton = driver.findElement(By.xpath("//button[@type='submit']"));
-        submitButton.click();
-
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.id("carrosTable")));
-
+        fillRegisterForm(" ", " ", 0, " ", " ");
+        submitFormAndWait();
 
         // nenhum carro novo pode ter sido adicionado
         assertThat(getNumbersOfCars()).isEqualTo(numberOfCars);
@@ -104,26 +85,8 @@ public class CreateTests {
 
         goToRegisterPage();
 
-        WebElement brandInput = driver.findElement(By.id("marca"));
-        brandInput.sendKeys(marca);
-
-        WebElement modelInput = driver.findElement(By.id("modelo"));
-        modelInput.sendKeys(modelo);
-
-        WebElement yearInput = driver.findElement(By.id("ano"));
-        yearInput.sendKeys(String.valueOf(ano));
-
-        WebElement colorInput = driver.findElement(By.id("cor"));
-        colorInput.sendKeys(cor);
-
-        WebElement plateInput = driver.findElement(By.id("placa"));
-        plateInput.sendKeys(placa);
-
-        WebElement submitButton = driver.findElement(By.xpath("//button[@type='submit']"));
-        submitButton.click();
-
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.id("carrosTable")));
+        fillRegisterForm(marca, modelo, ano, cor, placa);
+        submitFormAndWait();
 
         WebElement lastRow = driver.findElement(By.cssSelector("#carrosTable tbody tr:last-child"));
 
@@ -158,6 +121,33 @@ public class CreateTests {
         return rows.size();
     }
 
+    private void fillRegisterForm(String brand, String model, int year, String color, String plate){
+        goToRegisterPage();
+
+        WebElement brandInput = driver.findElement(By.id("marca"));
+        brandInput.sendKeys(brand);
+
+        WebElement modelInput = driver.findElement(By.id("modelo"));
+        modelInput.sendKeys(model);
+
+        WebElement yearInput = driver.findElement(By.id("ano"));
+        yearInput.sendKeys(String.valueOf(year));
+
+        WebElement colorInput = driver.findElement(By.id("cor"));
+        colorInput.sendKeys(color);
+
+        WebElement plateInput = driver.findElement(By.id("placa"));
+        plateInput.sendKeys(plate);
+
+    }
+
+    private void submitFormAndWait(){
+        WebElement submitButton = driver.findElement(By.xpath("//button[@type='submit']"));
+        submitButton.click();
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.id("carrosTable")));
+    }
 
 
 }
