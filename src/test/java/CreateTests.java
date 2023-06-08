@@ -9,6 +9,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -42,6 +43,19 @@ public class CreateTests {
         goToRegisterPage();
         goToHomePage();
         assertTrue(driver.getCurrentUrl().endsWith("home/index.html"));
+    }
+
+    @Test
+    @DisplayName("All fields should be empty when opening register page")
+    void allFieldsShouldBeEmptyWhenOpeningRegisterPage(){
+        goToRegisterPage();
+        WebElement carForm = driver.findElement(By.id("carForm"));
+        java.util.List<WebElement> inputFields = carForm.findElements(By.tagName("input"));
+
+        for (WebElement field : inputFields) {
+            assertThat(field.getAttribute("value")).isEmpty();
+        }
+
     }
 
     private void goToHomePage() {
