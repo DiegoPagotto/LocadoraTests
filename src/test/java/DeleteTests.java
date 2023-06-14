@@ -65,9 +65,9 @@ public class DeleteTests {
     @DisplayName("Should delete random entry from middle")
     void shouldDeleteRandomMiddle(){
         final List<WebElement> delBtns = driver.findElements(By.className("delete-button"));
-        if(delBtns.size() < 3){
-            assertThat("Table has less than 3 entries").isEqualTo("This test needs 3 or more entries in the table");
-        }
+        if(delBtns.size() < 3)
+            Assertions.fail("Not enough entries to test");
+
         int tableLen = delBtns.size() + 1;
         Random random = new Random();
         int posRemove = random.nextInt(tableLen - 3) + 3;
