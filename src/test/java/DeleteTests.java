@@ -1,22 +1,18 @@
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 
 import java.time.Duration;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Random;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.assertj.core.api.Assertions.assertThat;
 public class DeleteTests {
     private WebDriver driver;
@@ -47,10 +43,6 @@ public class DeleteTests {
     @Test
     @DisplayName("Should delete the first entry")
     void souldDeleteFirstEntry() {
-        final List<WebElement> delBtns = driver.findElements(By.className("delete-button"));
-        if(delBtns.size() == 0){
-            assertThat("Empty table").isEqualTo("Table with content");
-        }
         final String carPlate = driver.findElement(By.xpath("//*[@id=\"carrosTable\"]/tbody/tr[2]/td[6]")).getText();
         driver.findElement(By.className("delete-button")).click();
         driver.navigate().refresh();
@@ -62,9 +54,6 @@ public class DeleteTests {
     void shouldDeleteLastEntry(){
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofMillis(10000));
         final List<WebElement> delBtns = driver.findElements(By.className("delete-button"));
-        if(delBtns.isEmpty()){
-            assertThat("Empty table").isEqualTo("Table with content");
-        }
         WebElement button = wait.until(ExpectedConditions.elementToBeClickable(delBtns.get(delBtns.size() - 1)));
         button.click();
         driver.navigate().refresh();
@@ -93,9 +82,6 @@ public class DeleteTests {
     void shouldDeleteAll(){
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofMillis(10000));
         final List<WebElement> delBtns = driver.findElements(By.className("delete-button"));
-        if(delBtns.isEmpty()){
-            assertThat("Empty table").isEqualTo("Table with content");
-        }
         WebElement button;
         for(int i = delBtns.size(); i > 0; i--){
             button = wait.until(ExpectedConditions.elementToBeClickable(By.className("delete-button")));
