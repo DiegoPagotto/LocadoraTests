@@ -26,10 +26,16 @@ public class DeleteTests {
         driver = new ChromeDriver(options);
         driver.get("C:\\SeleniumTestNew\\frontend\\home\\index.html\n");
         driver.manage().timeouts().implicitlyWait(Duration.ofMillis(10000));
+        checkTableSize();
     }
     @AfterEach
     public void tearDown() {
         driver.quit();
+    }
+
+    private void checkTableSize(){
+        if(driver.findElements(By.tagName("tr")).size() - 1 < 1)
+            Assertions.fail("No entry to test");
     }
 
     @Test
